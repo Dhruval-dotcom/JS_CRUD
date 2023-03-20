@@ -101,6 +101,10 @@ telephone_relative.value = obj.telephone_r;
 relation_relative = objectid("relation-relative");
 relation_relative.value = obj.relation_r;
 
+document
+  .querySelector("#imagepreview")
+  .setAttribute("src", localStorage.getItem("img" + str)); //remove required from file
+
 function store(key, val) {
   localStorage.setItem(key, val);
 }
@@ -116,14 +120,28 @@ function checkempty(st, msg, elem) {
   }
   return true;
 }
+function checklength(key,p){
+  return key<Math.pow(10,p-1) || key>(Math.pow(10,p)-1);
+}
+function checknumber(req,msg,elem,len){
+  pn=parseInt(elem.value);
+  x = len - elem.value.length;
+  if (pn < Math.pow(10,len-1)) {
+    dst(req, x.toString() + " digits remaining", elem);
+  } else {
+    x=-x;
+    dst(req, msg + x.toString(), elem);
+  }
+  return false;
+}
 function fun() {
-  var req3 = objectid("req3");
+  let req3 = objectid("req3");
   namew = objectid("name");
   if (namew.value == "") {
     dst("req3", "Enter name", namew);
     return false;
   } else {
-    var regName = /^[a-zA-Z]+ [a-zA-Z]+$/;
+    let regName = /^[a-zA-Z]+ [a-zA-Z]+$/;
 
     if (!regName.test(namew.value)) {
       dst(
@@ -179,7 +197,7 @@ function fun() {
   } else {
     store("residence", residence.value);
   }
-  var regName = /^[a-zA-Z]+$/;
+  let regName = /^[a-zA-Z]+$/;
   postal = objectid("postal");
   if (postal.value == "") {
     dst("req7", "Enter Postal", postal);
@@ -190,15 +208,9 @@ function fun() {
       return false;
     } else {
       pn = parseInt(postal.value);
-      if (pn < 100000 || pn > 999999) {
-        if (pn < 100000) {
-          x = 6 - postal.value.length;
-          dst("req7", x.toString() + " digits remaining", postal);
-          return false;
-        } else if (pn > 999999) {
-          dst("req7", "Exceeded length.Enter valid 6 digit postal", postal);
-          return false;
-        }
+      if (checklength(pn,6)) {
+        console.log('here');
+        return checknumber('req7','Enter valid 6 digit postal, exceeded length by ',postal,6);
       } else {
         store("postal", postal.value);
       }
@@ -215,15 +227,8 @@ function fun() {
       return false;
     } else {
       mn = parseInt(mobile.value);
-      if (mn < 1000000000 || mn > 9999999999) {
-        if (mn < 1000000000) {
-          x = 10 - mobile.value.length;
-          dst("req8", x.toString() + " digits remaining", mobile);
-          return false;
-        } else if (mn > 9999999999) {
-          dst("req8", "Exceeded length.Enter valid 10 digit number", mobile);
-          return false;
-        }
+      if (checklength(mn,10)) {
+        return checknumber('req8','Enter valid 10 digit number,Exceeded length by',mobile,10);
       } else {
         store("mobile", mobile.value);
       }
@@ -254,8 +259,7 @@ function fun() {
     dst("req11", "Please Enter email", email);
     return false;
   } else {
-    var emailreg = /^([a-zA-Z0-9\.-]+)@([a-z0-9-]+).([a-z]{2,8})(.[a-z]{2,8})$/;
-    //var emailreg=/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    let emailreg = /^([a-zA-Z0-9\.-]+)@([a-z0-9-]+).([a-z]{2,8})(.[a-z]{2,8})$/;
     if (!emailreg.test(email.value)) {
       dst("req11", "Please enter valid email", email);
       return false;
@@ -318,15 +322,8 @@ function fun() {
       return false;
     } else {
       an = parseInt(aadhar.value);
-      if (an < 100000000000 || an > 999999999999) {
-        if (an < 100000000000) {
-          x = 12 - aadhar.value.length;
-          dst("req14", x.toString() + " digits remaining", aadhar);
-          return false;
-        } else if (an > 999999999999) {
-          dst("req14", "Exceeded length.Enter valid 12 digit number", aadhar);
-          return false;
-        }
+      if (checklength(an,12)) {
+        return checknumber('req14','Enter valid 12 digit number,Exceeded length by',aadhar,12);
       } else {
         store("aadhar", aadhar.value);
       }
@@ -338,7 +335,7 @@ function fun() {
     dst("req16", "Enter vehicle number", vehicle_no);
     return false;
   }
-  var regv = /^[A-Z]{2}[0-9]{2}[A-Z]{2}[0-9]{4}$/;
+  let regv = /^[A-Z]{2}[0-9]{2}[A-Z]{2}[0-9]{4}$/;
   if (vehicle_no.value != "") {
     if (!regv.test(vehicle_no.value)) {
       dst(
@@ -371,15 +368,8 @@ function fun() {
       return false;
     } else {
       dn = parseInt(debit.value);
-      if (dn < 100000000000 || dn > 999999999999) {
-        if (dn < 100000000000) {
-          x = 12 - debit.value.length;
-          dst("req18", x.toString() + " digits remaining", debit);
-          return false;
-        } else if (dn > 999999999999) {
-          dst("req18", "Exceeded length.Enter valid 12 digit number", debit);
-          return false;
-        }
+      if (checklength(dn,12)) {
+        return checknumber('req18','Enter valis 12 digit credit no. Exceeded length by ',debit,12);
       } else {
         store("debit", debit.value);
       }
@@ -397,19 +387,8 @@ function fun() {
       return false;
     } else {
       dn = parseInt(passport_no.value);
-      if (dn < 100000000 || dn > 999999999) {
-        if (dn < 100000000) {
-          x = 9 - passport_no.value.length;
-          dst("req19", x.toString() + " digits remaining", passport_no);
-          return false;
-        } else if (dn > 999999999) {
-          dst(
-            "req19",
-            "Exceeded length.Enter valid 12 digit number",
-            passport_no
-          );
-          return false;
-        }
+      if (checklength(dn,9)) {
+        return checknumber('req19','Exceeded length.Enter valid 12 digit number',passport_no,9);
       } else {
         store("passport-no", passport_no.value);
       }
@@ -436,7 +415,7 @@ function fun() {
     dst("req20", "Enter gstin", gstin);
     return false;
   }
-  var regdl = /^[A_Za-z0-9]{15}$/;
+  let regdl = /^[A_Za-z0-9]{15}$/;
   if (gstin.value != "") {
     if (!regdl.test(gstin.value)) {
       x = 15 - gstin.value.length;
@@ -456,7 +435,6 @@ function fun() {
     dst("req21", "Enter driving licence number", dl);
     return false;
   }
-  var regdl = /^[A_Za-z0-9]{15}$/;
   if (dl.value != "") {
     if (!regdl.test(dl.value)) {
       x = 15 - dl.value.length;
@@ -472,7 +450,7 @@ function fun() {
   }
 
   acc = objectid("account");
-  var accreg = /^[0-9]{8,14}$/;
+  let accreg = /^[0-9]{8,14}$/;
   if (acc.value == "") {
     dst("req22", "please Enter Acc number", acc);
     return false;
@@ -496,22 +474,25 @@ function fun() {
     dst("req23", "Enter credit number", credit);
     return false;
   }
-  var credreg = /^[0-9]{12}$/;
+  let credreg = /^[0-9]{12}$/;
   if (credit.value != "") {
-    if (!credreg.test(credit.value)) {
-      dst("req23", "credit number should be 12 digit long", credit);
-      return false;
+    if(!/^[0-9]+$/.test(credit.value)){
+      dst('req23','Enter digits only',credit);
+    }else if (checklength(parseInt(credit.value),12)) {
+      return checknumber('req23',"credit number should be 12 digit long exceeded length by",credit,12);
     } else {
       store("credit", credit.value);
     }
   }
 
   pan = objectid("pan");
-  var panreg = /^[0-9]{10}$/;
+  let panreg = /^[0-9]{10}$/;
   if (pan.value != "") {
-    if (!panreg.test(pan.value)) {
-      dst("req24", "PAN no should be 10 digit long should be only digit", pan);
+    if (!/^[0-9]+$/.test(pan.value)) {
+      dst("req24", "PAN no should be only digit", pan);
       return false;
+    }else if( checklength(parseInt(pan.value),10)){
+      return checknumber('req24','Enter valid pan number length exceeded by,',pan,10);
     } else {
       store("pan", pan.value);
     }
@@ -538,19 +519,8 @@ function fun() {
       return false;
     } else {
       mn = parseInt(mobile_relative.value);
-      if (mn < 1000000000 || mn > 9999999999) {
-        if (mn < 1000000000) {
-          x = 10 - mobile_relative.value.length;
-          dst("req29", x.toString() + " digits remaining", mobile_relative);
-          return false;
-        } else if (mn > 9999999999) {
-          dst(
-            "req29",
-            "Exceeded length.Enter valid 10 digit number",
-            mobile_relative
-          );
-          return false;
-        }
+      if (checklength(mn,10)) {
+        return checknumber('req29','Enter valid mobile no. Exceeded length by',mobile_relative,10);
       } else {
         store("mobile-relative", mobile_relative.value);
       }
@@ -596,7 +566,7 @@ function fun() {
     idcount = 1;
   }
 
-  var obj2 = {
+  let obj2 = {
     name: namew.value,
     gender: gender,
     dob: dob.value,

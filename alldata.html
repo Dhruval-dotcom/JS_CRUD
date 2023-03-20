@@ -30,35 +30,35 @@
 
                     var obj = JSON.parse(localStorage.getItem('obj' + i.toString()));
                     if (obj) {
-                        document.write("<tr>");
-                        document.write("<td>");
-                        document.write("<div class='d-flex align-items-center'>");
-                        document.write(`<img id='img${i}' width='45px' height='45px' class='rounded-circle' />`);
-                        document.write("<div class='ms-3'>");
-                        document.write(`<p class='fw-bold mb-1 ml-3'>${obj.name}</p>`);
-                        document.write(`<p class='text-muted mb-0 ml-3'>${obj.email}</p>`);
-                        document.write("</div>");
-                        document.write("</div>");
-                        document.write("</td>");
-                        document.write("<td>");
-                        document.write(`<p class='fw-normal mb-1'>${obj.deptc}</p>`);
-                        document.write(`<p class='text-muted mb-0'>${obj.mobile}</p>`);
-                        document.write("</td>");
-                        document.write("<td>");
+                        document.write(`<tr>
+                        <td>
+                        <div class='d-flex align-items-center'>
+                        <img id='img${i}' width='45px' height='45px' class='rounded-circle' />
+                        <div class='ms-3'>
+                        <p class='fw-bold mb-1 ml-3'>${obj.name}</p>
+                        <p class='text-muted mb-0 ml-3'>${obj.email}</p>
+                        </div>
+                        </div>
+                        </td>
+                        <td>
+                        <p class='fw-normal mb-1'>${obj.deptc}</p>
+                        <p class='text-muted mb-0'>${obj.mobile}</p>
+                        </td>
+                        <td>`);
                         document.write(i % 3 == 0 ? (`<span class='badge badge-success rounded-pill d-inline'>${obj.bloodgroup}</span>`) : (i % 3 == 1 ? (`<span class='badge badge-primary rounded-pill d-inline'>${obj.bloodgroup}</span>`) : `<span class='badge badge-warning rounded-pill d-inline'>${obj.bloodgroup}</span>`));
-                        document.write("</td>");
-                        document.write(`<td>${obj.office}</td>`);
-                        document.write("<td>");
-                        document.write(`<a type='button' href='edit.html?id=${i}' class='btn btn-link btn-sm btn-rounded'>`);
-                        document.write("<img width='18px' src='images/download.png'> Edit");
-                        document.write("</a>");
-                        document.write("</td>");
-                        document.write("<td>");
-                        document.write(`<a type='button' href='delete.html?id=${i}' class='btn btn-link btn-sm btn-rounded'>`);
-                        document.write("<img src='images/download (1).png' width='19px'> Delete");
-                        document.write("</a>");
-                        document.write("</td>");
-                        document.write("</tr> ");
+                        document.write(`</td>
+                        <td>${obj.office}</td>
+                        <td>
+                        <a type='button' href='edit.html?id=${i}' class='btn btn-link btn-sm btn-rounded'>
+                        <img width='18px' src='images/download.png'> Edit
+                        </a>
+                        </td>
+                        <td>
+                        <a type='button' onclick="return confirm('are you sure you want to delete?')" href='delete.html?id=${i}' class='btn btn-link btn-sm btn-rounded'>
+                        <img src='images/download (1).png' width='19px'> Delete
+                        </a>
+                        </td>
+                        </tr> `);
                         const rec = localStorage.getItem('img' + i.toString());
                         if (rec) {
                             document.querySelector('#img' + i.toString()).setAttribute("src", rec);
