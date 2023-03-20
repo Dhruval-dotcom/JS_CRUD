@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/font-awesome.css">
+    <script src="js/bootstrap.bundle.min.js.js"></script>
+    <script src="js/jquery.min.js.js"></script>
+<body>
+    <a href="index.html" class="btn-change6">Add new data</a>
+    <table class="table align-middle mb-0 bg-white">
+        <thead class="bg-light">
+            <tr>
+                <th>Name</th>
+                <th>Person Info</th>
+                <th>Blood group</th>
+                <th>Office</th>
+                <th>Update</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            <script>
+                var idcount = parseInt(localStorage.getItem('idcount'));
+                for (var i = 1; i < idcount; i++) {
+
+                    var obj = JSON.parse(localStorage.getItem('obj' + i.toString()));
+                    if (obj) {
+                        document.write("<tr>");
+                        document.write("<td>");
+                        document.write("<div class='d-flex align-items-center'>");
+                        document.write(`<img id='img${i}' style='width: 45px; height: 45px' class='rounded-circle' />`);
+                        document.write("<div class='ms-3'>");
+                        document.write(`<p class='fw-bold mb-1 ml-3'>${obj.name}</p>`);
+                        document.write(`<p class='text-muted mb-0 ml-3'>${obj.email}</p>`);
+                        document.write("</div>");
+                        document.write("</div>");
+                        document.write("</td>");
+                        document.write("<td>");
+                        document.write(`<p class='fw-normal mb-1'>${obj.deptc}</p>`);
+                        document.write(`<p class='text-muted mb-0'>${obj.mobile}</p>`);
+                        document.write("</td>");
+                        document.write("<td>");
+                        document.write(i % 3 == 0 ? (`<span class='badge badge-success rounded-pill d-inline'>${obj.bloodgroup}</span>`) : (i % 3 == 1 ? (`<span class='badge badge-primary rounded-pill d-inline'>${obj.bloodgroup}</span>`) : `<span class='badge badge-warning rounded-pill d-inline'>${obj.bloodgroup}</span>`));
+                        document.write("</td>");
+                        document.write(`<td>${obj.office}</td>`);
+                        document.write("<td>");
+                        document.write(`<a type='button' href='edit.html?id=${i}' class='btn btn-link btn-sm btn-rounded'>`);
+                        document.write("<img width='18px' src='images/download.png'> Edit");
+                        document.write("</a>");
+                        document.write("</td>");
+                        document.write("<td>");
+                        document.write(`<a type='button' href='delete.html?id=${i}' class='btn btn-link btn-sm btn-rounded'>`);
+                        document.write("<img src='images/download (1).png' width='19px'> Delete");
+                        document.write("</a>");
+                        document.write("</td>");
+                        document.write("</tr> ");
+                        const rec = localStorage.getItem('img' + i.toString());
+                        if (rec) {
+                            document.querySelector('#img' + i.toString()).setAttribute("src", rec);
+                        }
+                    }
+                }
+            </script>
+        </tbody>
+    </table>
+</body>
+</html>
