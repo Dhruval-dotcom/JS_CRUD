@@ -1,3 +1,4 @@
+var condition = false;
 function objectid(ob) {
   return document.getElementById(ob);
 }
@@ -490,7 +491,7 @@ function fun() {
     ) {
     }
   }
-
+  condition = true;
   idcount = localStorage.getItem("idcount");
   if (idcount === null) {
     idcount = 1;
@@ -537,7 +538,6 @@ function reqfun(obj) {
 function funchange() {
   objectid("ranval").innerHTML = objectid("ran").value;
 }
-
 let myPromise = new Promise(function (myResolve, myReject) {
   document.querySelector("#fil").addEventListener("change", function () {
     const reader = new FileReader();
@@ -549,5 +549,9 @@ let myPromise = new Promise(function (myResolve, myReject) {
 });
 
 myPromise.then(function (value) {
-  localStorage.setItem("img" + localStorage.getItem("idcount"), value);
+  if (localStorage.getItem("idcount")) {
+    localStorage.setItem("img" + localStorage.getItem("idcount"), value);
+  } else {
+    localStorage.setItem("img1", value);
+  }
 });
