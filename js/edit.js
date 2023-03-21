@@ -660,3 +660,6 @@ let myPromise = new Promise(function (myResolve, myReject) {
 myPromise.then(function (value) {
   localStorage.setItem("img" + str.toString(), value);
 });
+function funcimgpreview() {
+  objectid('imagepreview').src = URL.createObjectURL(objectid('fil').files[0]);
+}
